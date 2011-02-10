@@ -1,0 +1,3 @@
+[submodule "contrib/webdavjs"]
+	path = contrib/webdavjs
+	url = git://github.com/humanfromearth/webdavjs.git
