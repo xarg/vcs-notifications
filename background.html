@@ -1,0 +1,63 @@
+<html>
+	<head>
+        <script type="text/javascript" src="libs/webdav.js"></script>
+        <script type="text/javascript" src="libs/svn.js"></script>
+        <script type="text/javascript" src="libs/git.js"></script>
+        <script type="text/javascript" src="libs/hg.js"></script>
+
+		<script type="text/javascript">
+
+
+			function init() {
+				if (!localStorage.repos) {
+					updateStatus(-1);
+					jobs = null;
+					return;
+				} else
+
+                var requestUrl = localStorage.repos;
+                var repo_type = 'svn';
+                var repos = [];
+                var repos_logs = localStorage.logs;
+
+                //
+				//refreshTime = localStorage.refreshTime || REFRESH_DEFAULT;
+				//refreshTime *= 60 * 1000; // minutes in ms
+				//
+
+                for (i in repos){
+                    var VC;
+                    var web_dav = new WebDAV(requestUrl);
+                    switch(repo_type){
+                        case 'svn':
+                            var VC = new SVN(web_dav);
+                            break;
+                        case 'git':
+                            var VC = new GIT(web_dav);
+                            break;
+                        case 'hg':
+                            var VC = new HG(web_dav);
+                            break;
+                    }
+
+                    var latest_log = VC.fetch();
+                    if (repos_logs[i] != latest_log){
+                        /* Add to local storage, show notifications if possible
+                        modify the icon with the number of unread logs.
+                        */
+                    }
+                }
+                loadDir(fs.dir('/'));
+			}
+
+            function loadDir(dir){
+
+            }
+
+			window.onload = function() {
+                init();
+				window.setTimeout(init, 10);
+			}
+		</script>
+	</head>
+</html>

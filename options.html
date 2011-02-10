@@ -1,0 +1,85 @@
+<html>
+	<head>
+		<title>Version Control Notifications - Options Page</title>
+		<link rel="stylesheet" type="text/css" href="style.css"/>
+		<script type="text/javascript">
+			var repos;
+			var errorImage;
+			var refreshDropdown;
+
+			function init() {
+				repos = document.getElementById('repos');
+				errorImage = document.getElementById('error');
+				repos.value = localStorage.repos || '';
+				if (repos.value != '' &&
+                    !repos.value.match(/https?:\/\/\S+/i)) {
+					errorImage.style.visibility = 'visible';
+				} else {
+					errorImage.style.visibility = 'hidden';
+				}
+
+				refreshDropdown = document.getElementById('refresh');
+				var refreshTime = localStorage.refreshTime || '5';
+				for (var i = 0; i < refreshDropdown.options.length; i++) {
+					if (refreshDropdown.options[i].value == refreshTime) {
+						refreshDropdown.selectedIndex = i;
+						break;
+					}
+				}
+			}
+
+			function save() {
+				if (repos.value != '' && repos.value != 'http://') {
+					localStorage.repos = repos.value.charAt(repos.value.length - 1) == '/' ? repos.value : repos.value + '/';
+				} else {
+					delete localStorage.repos;
+				}
+
+                localStorage.refreshTime = refreshDropdown.value;
+
+				init();
+				chrome.extension.getBackgroundPage().init();
+			}
+
+		</script>
+	</head>
+	<body onload="init()">
+		<h1>Version Control Notifications</h1>
+		<h2>Options</h2>
+		<fieldset>
+			<legend>Basic Setup</legend>
+			<table>
+				<tr>
+					<td><label for="refresh">Refresh Time</label></td>
+					<td colspan="2">
+						<select id="refresh" name="refresh">
+							<option value="5">5 Minutes</option>
+							<option value="10">10 Minutes</option>
+							<option value="15">15 Minutes</option>
+							<option value="20">20 Minutes</option>
+							<option value="25">25 Minutes</option>
+							<option value="30">30 Minutes</option>
+							<option value="35">35 Minutes</option>
+							<option value="40">40 Minutes</option>
+							<option value="45">45 Minutes</option>
+							<option value="50">50 Minutes</option>
+							<option value="55">55 Minutes</option>
+							<option value="60">60 Minutes</option>
+						</select>
+					</td>
+				</tr>
+			</table>
+		</fieldset>
+        <fieldset>
+			<legend>Repositories</legend>
+            <label for="repos">One url per line</label>
+            <textarea id="repos" cols="50" rows="15"></textarea>
+            <img id="error" src="images/error.png" width="16" height="16" alt="Error"/>
+		</fieldset>
+
+        <div class="optionform">
+			<input type="button" id="save" name="save" value="Save" onclick="save()"/>
+			<input type="button" id="cancel" name="cancel" value="Cancel" onclick="init()"/>
+		</div>
+	</body>
+</html>
