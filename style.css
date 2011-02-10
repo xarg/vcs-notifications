@@ -1,0 +1,80 @@
+body {
+	/*background-image: url(images/background.png);*/
+	background-position: 0% 100%;
+	background-repeat: no-repeat;
+	font-family: sans-serif;
+	overflow-x: hidden;
+}
+
+a {
+	color: blue;
+}
+
+a:visited {
+	color: blue;
+}
+
+img#error {
+	visibility: hidden;
+}
+
+input#save {
+	font-weight: bold;
+}
+
+fieldset {
+	margin-top: 1.5em;
+	margin-bottom: 1.5em;
+	width: 20em;
+}
+
+div.optionform {
+	width: 20em;
+	padding: 0 0.75em;
+}
+
+div.optionform a {
+	float: right;
+}
+
+div#wrapper {
+	min-height: 300px;
+	min-width: 300px;
+}
+
+table#tab td {
+	padding: 0.5em;
+	white-space: nowrap;
+}
+
+img#refreshIcon {
+	width: 19px;
+	height: 19px;
+	border: 0;
+	vertical-align: text-bottom;
+}
+
+div#refresh {
+	float: right;
+	cursor: pointer;
+}
+
+div#refresh:hover:before {
+	content: "Refresh ";
+	color: silver;
+	font-weight: normal;
+	font-size: medium;
+}
+
+div#wrapper h3 {
+	display: inline;
+	cursor: pointer;
+}
+
+div#wrapper h3:hover:after {
+	content: " Home";
+	color: silver;
+	font-weight: normal;
+	font-size: medium;
+	vertical-align: middle;
+}
