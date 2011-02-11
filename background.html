@@ -7,19 +7,15 @@
 
 		<script type="text/javascript">
 
-
 			function init() {
 				if (!localStorage.repos) {
 					updateStatus(-1);
 					jobs = null;
 					return;
-				} else
-
-                var requestUrl = localStorage.repos;
-                var repo_type = 'svn';
-                var repos = [];
-                var repos_logs = localStorage.logs;
-
+				}
+				var logs = localStorage.logs;
+				var repos = localStorage.repos;
+				
                 //
 				//refreshTime = localStorage.refreshTime || REFRESH_DEFAULT;
 				//refreshTime *= 60 * 1000; // minutes in ms
@@ -39,7 +35,6 @@
                             var VC = new HG(web_dav);
                             break;
                     }
-
                     var latest_log = VC.fetch();
                     if (repos_logs[i] != latest_log){
                         /* Add to local storage, show notifications if possible
@@ -47,12 +42,16 @@
                         */
                     }
                 }
-                loadDir(fs.dir('/'));
 			}
 
-            function loadDir(dir){
-
-            }
+			function show_notification(log){
+				var notification = webkitNotifications.createNotification(
+				  'images/icon_048.png',
+				  log.title,
+				  log.body
+				);
+				notification.show();
+			}
 
 			window.onload = function() {
                 init();
